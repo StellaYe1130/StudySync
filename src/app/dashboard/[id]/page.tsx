@@ -75,34 +75,34 @@ export default function ProjectPage() {
   )
 
   return (
-    <div className="min-h-screen bg-[#f9f9f7] flex">
+    <div className="min-h-screen bg-slate-100 flex">
       {/* ── Sidebar ── */}
-      <aside className="w-52 bg-white border-r border-gray-100 flex flex-col fixed h-full z-10">
-        <div className="px-4 py-5 border-b border-gray-100">
-          <button onClick={() => router.push('/dashboard')} className="text-xs text-gray-400 hover:text-gray-600 mb-3 block">
+      <aside className="w-52 bg-slate-700 flex flex-col fixed h-full z-10">
+        <div className="px-4 py-5 border-b border-slate-600">
+          <button onClick={() => router.push('/dashboard')} className="text-xs text-slate-400 hover:text-slate-200 mb-3 block transition">
             ← Back
           </button>
-          <div className="text-sm font-semibold text-gray-900">StudySync</div>
+          <div className="text-sm font-semibold text-white">StudySync</div>
           {project?.course_code && (
-            <span className="mt-1.5 inline-block text-xs bg-violet-100 text-violet-700 px-2 py-0.5 rounded-full font-medium">
+            <span className="mt-1.5 inline-block text-xs bg-blue-500/25 text-blue-300 px-2 py-0.5 rounded-full font-medium">
               {project.course_code}
             </span>
           )}
-          <p className="text-xs text-gray-400 mt-1 truncate leading-snug">{project?.name}</p>
+          <p className="text-xs text-slate-400 mt-1 truncate leading-snug">{project?.name}</p>
         </div>
 
         <nav className="flex-1 px-3 py-4 overflow-y-auto">
           {NAV.map(s => (
             <div key={s.section} className="mb-5">
-              <p className="text-xs font-medium text-gray-400 uppercase tracking-wider px-2 mb-1">{s.section}</p>
+              <p className="text-xs font-medium text-slate-500 uppercase tracking-wider px-2 mb-1">{s.section}</p>
               {s.items.map(item => (
                 <button
                   key={item.key}
                   onClick={() => setActiveTab(item.key)}
                   className={`w-full text-left px-3 py-2 rounded-lg text-sm transition mb-0.5 ${
                     activeTab === item.key
-                      ? 'bg-violet-50 text-violet-700 font-medium'
-                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                      ? 'bg-white/15 text-white font-medium'
+                      : 'text-slate-300 hover:bg-white/8 hover:text-white'
                   }`}
                 >
                   {item.label}
@@ -112,16 +112,16 @@ export default function ProjectPage() {
           ))}
         </nav>
 
-        <div className="px-4 py-4 border-t border-gray-100">
+        <div className="px-4 py-4 border-t border-slate-600">
           <div className="flex items-center gap-2 mb-2">
-            <div className="w-7 h-7 rounded-full bg-violet-100 flex items-center justify-center text-violet-600 text-xs font-semibold">
+            <div className="w-7 h-7 rounded-full bg-blue-500 flex items-center justify-center text-white text-xs font-semibold">
               {user?.email?.charAt(0).toUpperCase()}
             </div>
-            <p className="text-xs text-gray-600 truncate flex-1">{user?.email}</p>
+            <p className="text-xs text-slate-300 truncate flex-1">{user?.email}</p>
           </div>
           <button
             onClick={async () => { await supabase.auth.signOut(); router.push('/') }}
-            className="text-xs text-gray-400 hover:text-gray-600"
+            className="text-xs text-slate-500 hover:text-slate-300 transition"
           >
             Sign out
           </button>
@@ -198,9 +198,9 @@ function DashboardTab({ project, projectId, userId, userEmail, setActiveTab }: a
 
       {/* Stat cards */}
       <div className="grid grid-cols-3 gap-4 mb-5">
-        <StatCard label="Tasks done" value={`${done.length} / ${tasks.length}`} sub={`${tasks.length ? Math.round(done.length / tasks.length * 100) : 0}% complete`} />
-        <StatCard label="Overdue" value={String(overdue.length)} sub={overdue.length > 0 ? 'needs attention' : 'all on track'} alert={overdue.length > 0} />
-        <StatCard label="Bingo progress" value={`${bingoCompleted.length + 1} / 25`} sub="keep going!" />
+        <StatCard label="Tasks done" value={`${done.length} / ${tasks.length}`} sub={`${tasks.length ? Math.round(done.length / tasks.length * 100) : 0}% complete`} color="bg-blue-500" />
+        <StatCard label="Overdue" value={String(overdue.length)} sub={overdue.length > 0 ? 'needs attention' : 'all on track'} alert={overdue.length > 0} color="bg-amber-400" />
+        <StatCard label="Bingo progress" value={`${bingoCompleted.length + 1} / 25`} sub="keep going!" color="bg-teal-500" />
       </div>
 
       {/* Overdue alert */}
@@ -216,10 +216,10 @@ function DashboardTab({ project, projectId, userId, userEmail, setActiveTab }: a
 
       <div className="grid grid-cols-2 gap-5">
         {/* My tasks */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-5">
+        <div className="bg-white rounded-2xl shadow-sm p-5">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-medium text-gray-900">My tasks</h3>
-            <button onClick={() => setActiveTab('tasks')} className="text-xs text-violet-600 hover:text-violet-700">see all →</button>
+            <button onClick={() => setActiveTab('tasks')} className="text-xs text-blue-600 hover:text-blue-700">see all →</button>
           </div>
           {myTasks.length === 0
             ? <p className="text-sm text-gray-400">No tasks assigned</p>
@@ -241,10 +241,10 @@ function DashboardTab({ project, projectId, userId, userEmail, setActiveTab }: a
         </div>
 
         {/* Team contribution */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-5">
+        <div className="bg-white rounded-2xl shadow-sm p-5">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-medium text-gray-900">Team contribution</h3>
-            <button onClick={() => setActiveTab('stats')} className="text-xs text-violet-600 hover:text-violet-700">details →</button>
+            <button onClick={() => setActiveTab('stats')} className="text-xs text-blue-600 hover:text-blue-700">details →</button>
           </div>
           {contribution.length === 0
             ? <p className="text-sm text-gray-400">No members yet</p>
@@ -253,7 +253,7 @@ function DashboardTab({ project, projectId, userId, userEmail, setActiveTab }: a
                   const name = m.profiles?.display_name || m.profiles?.email?.split('@')[0] || '?'
                   return (
                     <div key={i} className="flex items-center gap-3">
-                      <div className="w-7 h-7 rounded-full bg-violet-100 flex items-center justify-center text-violet-600 text-xs font-semibold flex-shrink-0">
+                      <div className="w-7 h-7 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xs font-semibold flex-shrink-0">
                         {name.charAt(0).toUpperCase()}
                       </div>
                       <div className="flex-1 min-w-0">
@@ -262,7 +262,7 @@ function DashboardTab({ project, projectId, userId, userEmail, setActiveTab }: a
                           <span className="text-xs text-gray-400 ml-2">{m.pct}%</span>
                         </div>
                         <div className="w-full bg-gray-100 rounded-full h-1.5">
-                          <div className="bg-violet-500 h-1.5 rounded-full" style={{ width: `${m.pct}%` }} />
+                          <div className="bg-blue-500 h-1.5 rounded-full" style={{ width: `${m.pct}%` }} />
                         </div>
                       </div>
                     </div>
@@ -273,10 +273,10 @@ function DashboardTab({ project, projectId, userId, userEmail, setActiveTab }: a
         </div>
 
         {/* Recent chat */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-5">
+        <div className="bg-white rounded-2xl shadow-sm p-5">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-medium text-gray-900">Recent chat</h3>
-            <button onClick={() => setActiveTab('chat')} className="text-xs text-violet-600 hover:text-violet-700">open →</button>
+            <button onClick={() => setActiveTab('chat')} className="text-xs text-blue-600 hover:text-blue-700">open →</button>
           </div>
           {messages.length === 0
             ? <p className="text-sm text-gray-400">No messages yet</p>
@@ -299,16 +299,16 @@ function DashboardTab({ project, projectId, userId, userEmail, setActiveTab }: a
         </div>
 
         {/* Bingo mini */}
-        <div className="bg-white rounded-2xl border border-gray-100 p-5">
+        <div className="bg-white rounded-2xl shadow-sm p-5">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-medium text-gray-900">Bingo card</h3>
-            <button onClick={() => setActiveTab('bingo')} className="text-xs text-violet-600 hover:text-violet-700">view →</button>
+            <button onClick={() => setActiveTab('bingo')} className="text-xs text-blue-600 hover:text-blue-700">view →</button>
           </div>
           <div className="grid grid-cols-5 gap-1">
             {BINGO_CELLS.map((cell, i) => {
               const done = bingoCompleted.includes(cell) || cell === 'FREE'
               return (
-                <div key={i} className={`aspect-square rounded-lg flex items-center justify-center text-xs ${cell === 'FREE' ? 'bg-violet-100 text-violet-500' : done ? 'bg-teal-100 text-teal-600' : 'bg-gray-50 text-gray-200'}`}>
+                <div key={i} className={`aspect-square rounded-lg flex items-center justify-center text-xs ${cell === 'FREE' ? 'bg-blue-100 text-blue-500' : done ? 'bg-teal-100 text-teal-600' : 'bg-gray-50 text-gray-200'}`}>
                   {done && cell !== 'FREE' ? '✓' : cell === 'FREE' ? '★' : ''}
                 </div>
               )
@@ -320,11 +320,11 @@ function DashboardTab({ project, projectId, userId, userEmail, setActiveTab }: a
   )
 }
 
-function StatCard({ label, value, sub, alert }: { label: string; value: string; sub: string; alert?: boolean }) {
+function StatCard({ label, value, sub, alert, color = 'bg-blue-500' }: { label: string; value: string; sub: string; alert?: boolean; color?: string }) {
   return (
-    <div className={`bg-white rounded-2xl border p-5 ${alert ? 'border-red-100' : 'border-gray-100'}`}>
+    <div className={`bg-white rounded-2xl shadow-sm p-5 border-l-4 ${alert ? 'border-l-red-400' : color.replace('bg-', 'border-l-')}`}>
       <p className="text-xs text-gray-400 font-medium mb-2">{label}</p>
-      <p className={`text-2xl font-semibold ${alert ? 'text-red-500' : 'text-gray-900'}`}>{value}</p>
+      <p className={`text-2xl font-bold ${alert ? 'text-red-500' : 'text-gray-900'}`}>{value}</p>
       <p className="text-xs text-gray-400 mt-1">{sub}</p>
     </div>
   )
@@ -404,7 +404,7 @@ function TasksTab({ projectId, userId }: { projectId: string; userId: string }) 
     <div className="p-8">
       <div className="flex items-center justify-between mb-5">
         <h2 className="text-xl font-semibold text-gray-900">Tasks</h2>
-        <button onClick={() => setShowForm(!showForm)} className="bg-violet-600 text-white text-sm font-medium px-4 py-2 rounded-xl hover:bg-violet-700 transition">
+        <button onClick={() => setShowForm(!showForm)} className="bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-xl hover:bg-blue-700 transition">
           + New task
         </button>
       </div>
@@ -422,12 +422,12 @@ function TasksTab({ projectId, userId }: { projectId: string; userId: string }) 
           <div className="flex-1 min-w-44">
             <label className="block text-xs font-medium text-gray-600 mb-1">Title</label>
             <input value={title} onChange={e => setTitle(e.target.value)} required placeholder="Task title"
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500" />
+              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
           </div>
           <div>
             <label className="block text-xs font-medium text-gray-600 mb-1">Assign to</label>
             <select value={assigneeId} onChange={e => setAssigneeId(e.target.value)}
-              className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500">
+              className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
               {members.map(m => (
                 <option key={m.user_id} value={m.user_id}>
                   {m.profiles?.display_name || m.profiles?.email?.split('@')[0]}{m.user_id === userId ? ' (you)' : ''}
@@ -438,7 +438,7 @@ function TasksTab({ projectId, userId }: { projectId: string; userId: string }) 
           <div>
             <label className="block text-xs font-medium text-gray-600 mb-1">Status</label>
             <select value={status} onChange={e => setStatus(e.target.value)}
-              className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500">
+              className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
               <option value="todo">To do</option>
               <option value="in_progress">In progress</option>
               <option value="done">Done</option>
@@ -448,10 +448,10 @@ function TasksTab({ projectId, userId }: { projectId: string; userId: string }) 
           <div>
             <label className="block text-xs font-medium text-gray-600 mb-1">Due date</label>
             <input type="date" value={dueDate} onChange={e => setDueDate(e.target.value)}
-              className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500" />
+              className="border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
           </div>
           <button type="submit" disabled={saving}
-            className="bg-violet-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-violet-700 disabled:opacity-50">
+            className="bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-blue-700 disabled:opacity-50">
             {saving ? 'Saving...' : 'Save'}
           </button>
         </form>
@@ -460,9 +460,9 @@ function TasksTab({ projectId, userId }: { projectId: string; userId: string }) 
       <div className="flex gap-2 mb-5 flex-wrap">
         {FILTERS.map(f => (
           <button key={f.key} onClick={() => setFilter(f.key)}
-            className={`px-3 py-1.5 rounded-full text-xs font-medium transition ${filter === f.key ? 'bg-violet-600 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-violet-300'}`}>
+            className={`px-3 py-1.5 rounded-full text-xs font-medium transition ${filter === f.key ? 'bg-blue-600 text-white' : 'bg-white border border-gray-200 text-gray-600 hover:border-blue-300'}`}>
             {f.label}
-            {f.count > 0 && <span className={`ml-1 px-1.5 rounded-full ${filter === f.key ? 'bg-violet-700' : 'bg-gray-100 text-gray-500'}`}>{f.count}</span>}
+            {f.count > 0 && <span className={`ml-1 px-1.5 rounded-full ${filter === f.key ? 'bg-blue-700' : 'bg-gray-100 text-gray-500'}`}>{f.count}</span>}
           </button>
         ))}
       </div>
@@ -486,7 +486,7 @@ function TasksTab({ projectId, userId }: { projectId: string; userId: string }) 
                         </span>
                       )}
                       {t.assignee_id && (
-                        <div className="w-5 h-5 rounded-full bg-violet-100 flex items-center justify-center text-violet-600 text-xs font-semibold ml-auto">
+                        <div className="w-5 h-5 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xs font-semibold ml-auto">
                           {initials(t.assignee_id)}
                         </div>
                       )}
@@ -623,7 +623,7 @@ function ChatTab({ projectId, userId, userEmail }: { projectId: string; userId: 
             </span>
           ))}
           <button onClick={() => fileInputRef.current?.click()} disabled={uploading}
-            className="text-xs text-violet-600 bg-violet-50 hover:bg-violet-100 px-3 py-1.5 rounded-lg transition disabled:opacity-50 whitespace-nowrap">
+            className="text-xs text-blue-600 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg transition disabled:opacity-50 whitespace-nowrap">
             {uploading ? 'Uploading...' : '+ Upload PDF'}
           </button>
           <input ref={fileInputRef} type="file" accept=".pdf" className="hidden" onChange={uploadPDF} />
@@ -635,31 +635,31 @@ function ChatTab({ projectId, userId, userEmail }: { projectId: string; userId: 
           {messages.length === 0 && <p className="text-sm text-gray-400 text-center mt-10">No messages yet. Say hi!</p>}
           {messages.map((m, i) => (
             <div key={i} className="flex gap-3 items-start">
-              <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold flex-shrink-0 ${m.is_ai ? 'bg-violet-100 text-violet-600' : 'bg-gray-100 text-gray-600'}`}>
+              <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold flex-shrink-0 ${m.is_ai ? 'bg-blue-100 text-blue-600' : 'bg-gray-100 text-gray-600'}`}>
                 {m.is_ai ? 'AI' : userEmail.charAt(0).toUpperCase()}
               </div>
-              <div className={`rounded-2xl px-4 py-2.5 max-w-lg text-sm whitespace-pre-wrap ${m.is_ai ? 'bg-violet-50 text-gray-800' : 'bg-gray-100 text-gray-800'}`}>
+              <div className={`rounded-2xl px-4 py-2.5 max-w-lg text-sm whitespace-pre-wrap ${m.is_ai ? 'bg-blue-50 text-gray-800' : 'bg-gray-100 text-gray-800'}`}>
                 {m.content}
               </div>
             </div>
           ))}
           {aiThinking && (
             <div className="flex gap-3 items-start">
-              <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold flex-shrink-0 bg-violet-100 text-violet-600">AI</div>
-              <div className="rounded-2xl px-4 py-2.5 bg-violet-50 text-gray-400 text-sm italic">Thinking...</div>
+              <div className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-semibold flex-shrink-0 bg-blue-100 text-blue-600">AI</div>
+              <div className="rounded-2xl px-4 py-2.5 bg-blue-50 text-gray-400 text-sm italic">Thinking...</div>
             </div>
           )}
           <div ref={messagesEndRef} />
         </div>
         <form onSubmit={sendMessage} className="px-5 py-4 border-t border-gray-100 flex gap-2">
           <input value={input} onChange={e => setInput(e.target.value)} placeholder="Message or ask AI..."
-            className="flex-1 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500" />
+            className="flex-1 border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
           <button type="button" onClick={askAI} disabled={sending}
-            className="bg-violet-100 text-violet-700 text-sm font-medium px-4 py-2.5 rounded-xl hover:bg-violet-200 transition disabled:opacity-50">
+            className="bg-blue-100 text-blue-700 text-sm font-medium px-4 py-2.5 rounded-xl hover:bg-blue-200 transition disabled:opacity-50">
             Ask AI
           </button>
           <button type="submit" disabled={sending}
-            className="bg-violet-600 text-white text-sm font-medium px-4 py-2.5 rounded-xl hover:bg-violet-700 transition disabled:opacity-50">
+            className="bg-blue-600 text-white text-sm font-medium px-4 py-2.5 rounded-xl hover:bg-blue-700 transition disabled:opacity-50">
             Send
           </button>
         </form>
@@ -726,7 +726,7 @@ function StatsTab({ projectId, userId }: { projectId: string; userId: string }) 
     return { ...m, done, total: mt.length, msgs, pct }
   }).sort((a, b) => b.pct - a.pct)
 
-  const COLORS = ['bg-violet-500', 'bg-teal-500', 'bg-amber-500', 'bg-rose-500']
+  const COLORS = ['bg-blue-500', 'bg-teal-500', 'bg-amber-500', 'bg-rose-500']
 
   return (
     <div className="p-8">
@@ -743,7 +743,7 @@ function StatsTab({ projectId, userId }: { projectId: string; userId: string }) 
                   <div key={i}>
                     <div className="flex items-center justify-between mb-2">
                       <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 rounded-full bg-violet-100 flex items-center justify-center text-violet-600 text-xs font-semibold">
+                        <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xs font-semibold">
                           {name.charAt(0).toUpperCase()}
                         </div>
                         <div>
@@ -763,7 +763,7 @@ function StatsTab({ projectId, userId }: { projectId: string; userId: string }) 
         }
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-100 p-6">
+      <div className="bg-white rounded-2xl shadow-sm p-6">
         <h3 className="font-medium text-gray-900 mb-4">Activity summary</h3>
         <div className="grid grid-cols-3 gap-4">
           <div className="text-center p-4 bg-gray-50 rounded-xl">
@@ -854,10 +854,10 @@ function BingoTab({ projectId, userId }: { projectId: string; userId: string }) 
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
-          <div className="bg-white rounded-2xl border border-gray-100 p-6">
+          <div className="bg-white rounded-2xl shadow-sm p-6">
             {hasBingo && (
-              <div className="bg-violet-50 border border-violet-200 rounded-xl p-3 mb-4 text-center">
-                <span className="text-violet-700 font-semibold text-sm">🎉 Bingo! You completed a line!</span>
+              <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 mb-4 text-center">
+                <span className="text-blue-700 font-semibold text-sm">🎉 Bingo! You completed a line!</span>
               </div>
             )}
             <div className="grid grid-cols-5 gap-2">
@@ -866,9 +866,9 @@ function BingoTab({ projectId, userId }: { projectId: string; userId: string }) 
                 return (
                   <button key={i} onClick={() => toggleCell(cell)}
                     className={`aspect-square rounded-xl text-xs font-medium p-1.5 transition flex items-center justify-center text-center leading-tight ${
-                      cell === 'FREE'  ? 'bg-violet-100 text-violet-600 cursor-default' :
+                      cell === 'FREE'  ? 'bg-blue-100 text-blue-600 cursor-default' :
                       done             ? 'bg-teal-100 text-teal-700 border-2 border-teal-300' :
-                                         'bg-gray-50 border border-gray-200 text-gray-500 hover:border-violet-300 hover:bg-violet-50'
+                                         'bg-gray-50 border border-gray-200 text-gray-500 hover:border-blue-300 hover:bg-blue-50'
                     }`}>
                     {done && cell !== 'FREE' ? '✓' : cell}
                   </button>
@@ -877,7 +877,7 @@ function BingoTab({ projectId, userId }: { projectId: string; userId: string }) 
             </div>
             <div className="flex gap-4 mt-4 text-xs text-gray-400">
               <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-sm bg-teal-100 border border-teal-300 inline-block" /> Completed</span>
-              <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-sm bg-violet-100 inline-block" /> Free</span>
+              <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-sm bg-blue-100 inline-block" /> Free</span>
               <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-sm bg-gray-50 border border-gray-200 inline-block" /> Locked</span>
             </div>
           </div>
@@ -885,22 +885,22 @@ function BingoTab({ projectId, userId }: { projectId: string; userId: string }) 
 
         <div className="flex flex-col gap-4">
           {/* Ice breaker */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-5">
+          <div className="bg-white rounded-2xl shadow-sm p-5">
             <h3 className="font-medium text-gray-900 mb-3">Ice breaker 🧊</h3>
             <p className="text-sm text-gray-700 font-medium leading-snug mb-3">"{ICE_BREAKERS[iceIdx]}"</p>
             <button onClick={() => setIceIdx(i => (i + 1) % ICE_BREAKERS.length)}
-              className="text-xs text-violet-600 hover:text-violet-700 font-medium">
+              className="text-xs text-blue-600 hover:text-blue-700 font-medium">
               Next question →
             </button>
           </div>
 
           {/* Badges */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-5">
+          <div className="bg-white rounded-2xl shadow-sm p-5">
             <h3 className="font-medium text-gray-900 mb-3">Badges earned</h3>
             <div className="grid grid-cols-3 gap-2">
               {BADGES.map(b => (
                 <div key={b.key} title={b.desc}
-                  className={`flex flex-col items-center gap-1 p-2 rounded-xl text-center ${earned.has(b.key) ? 'bg-violet-50' : 'opacity-25 grayscale'}`}>
+                  className={`flex flex-col items-center gap-1 p-2 rounded-xl text-center ${earned.has(b.key) ? 'bg-blue-50' : 'opacity-25 grayscale'}`}>
                   <span className="text-xl">{b.icon}</span>
                   <span className="text-xs text-gray-600 font-medium leading-tight">{b.label}</span>
                 </div>
@@ -909,7 +909,7 @@ function BingoTab({ projectId, userId }: { projectId: string; userId: string }) 
           </div>
 
           {/* Milestones */}
-          <div className="bg-white rounded-2xl border border-gray-100 p-5">
+          <div className="bg-white rounded-2xl shadow-sm p-5">
             <h3 className="font-medium text-gray-900 mb-3">Milestones</h3>
             <div className="flex flex-col gap-3">
               {MILESTONES.map((m, i) => (
@@ -977,7 +977,7 @@ function SettingsTab({ project, projectId, userId }: { project: any; projectId: 
         ))}
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-100 p-6">
+      <div className="bg-white rounded-2xl shadow-sm p-6">
         <h3 className="font-medium text-gray-900 mb-4">Team members</h3>
         {members.length > 0 && (
           <div className="flex flex-col gap-3 mb-5">
@@ -985,14 +985,14 @@ function SettingsTab({ project, projectId, userId }: { project: any; projectId: 
               const name = m.profiles?.display_name || m.profiles?.email || '?'
               return (
                 <div key={i} className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full bg-violet-100 flex items-center justify-center text-violet-600 text-xs font-semibold">
+                  <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xs font-semibold">
                     {name.charAt(0).toUpperCase()}
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-sm font-medium text-gray-900 truncate">{name}</p>
                     <p className="text-xs text-gray-400">{m.profiles?.email} · {m.role}</p>
                   </div>
-                  {m.user_id === userId && <span className="text-xs bg-violet-100 text-violet-600 px-2 py-0.5 rounded-full">You</span>}
+                  {m.user_id === userId && <span className="text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full">You</span>}
                 </div>
               )
             })}
@@ -1001,9 +1001,9 @@ function SettingsTab({ project, projectId, userId }: { project: any; projectId: 
         <form onSubmit={inviteMember} className="flex gap-2">
           <input value={inviteEmail} onChange={e => setInviteEmail(e.target.value)}
             placeholder="Invite by email" type="email" required
-            className="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500" />
+            className="flex-1 border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" />
           <button type="submit" disabled={inviting}
-            className="bg-violet-600 text-white text-sm font-medium px-4 py-2 rounded-xl hover:bg-violet-700 disabled:opacity-50">
+            className="bg-blue-600 text-white text-sm font-medium px-4 py-2 rounded-xl hover:bg-blue-700 disabled:opacity-50">
             {inviting ? '...' : 'Invite'}
           </button>
         </form>
