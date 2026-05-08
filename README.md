@@ -152,13 +152,33 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ---
 
-## Project Context / 项目背景
+## User-Centred Design Process / 以用户为中心的设计过程
 
-Built for **INFO2222 / SOFT2412** at the University of Sydney as part of a user-centred design process.
-为悉尼大学 **INFO2222 / SOFT2412** 课程开发，遵循以用户为中心的设计流程。
+Built for **INFO2222 / SOFT2412** at the University of Sydney through a full UCD cycle — from research to prototype to evaluated product.
+为悉尼大学 **INFO2222 / SOFT2412** 课程开发，经历完整 UCD 流程——从用研到原型再到评估。
 
-- **Phase 1 / 阶段一**: GenAI platform research and prototype generation / GenAI 平台调研与原型生成
-- **Phase 2 / 阶段二**: Semi-structured interviews, thematic analysis, lo-fi + hi-fi prototyping / 半结构化访谈、主题分析、低保真 + 高保真原型
-- **Phase 3 / 阶段三**: Security implementation, usability testing, LLM evaluation / 安全实现、可用性测试、LLM 评估
+### Research / 用户研究
 
-Core user needs identified / 核心用户需求：**Transparency / 透明度** · **Coordination / 协调** · **Cohesion / 凝聚力**
+Conducted **semi-structured interviews with 4 university students** who had recent group assignment experience. Interviews focused on pain points, workarounds, and unmet needs in existing tools (WeChat, Google Docs, Notion).
+
+对 **4 名有近期小组作业经历的大学生** 进行半结构化访谈，聚焦于现有工具（微信、Google Docs、Notion）的痛点、临时解决方案和未满足需求。
+
+Key themes identified via thematic analysis / 主题分析归纳出的核心主题：
+
+| Theme / 主题 | Pain Point / 痛点 | Feature Built / 对应功能 |
+|---|---|---|
+| Transparency / 透明度 | Can't see who's doing what / 看不到谁在做什么 | Task board + contribution stats / 任务看板 + 贡献统计 |
+| Coordination / 协调 | Miss deadlines, scheduling chaos / 错过截止日期、协调混乱 | Deadline countdown + overdue alerts / 倒计时 + 逾期提醒 |
+| Cohesion / 凝聚力 | New teams feel awkward, free-riders / 新团队社交摩擦、搭便车 | Bingo gamification + ice breakers / Bingo 游戏化 + 破冰问题 |
+
+### Design Process / 设计流程
+
+- **Phase 1 / 阶段一** — GenAI platform research, rapid prototype generation / GenAI 平台调研，快速原型生成
+- **Phase 2 / 阶段二** — Interviews → thematic analysis → lo-fi sketches → hi-fi Figma prototype / 访谈 → 主题分析 → 低保真草图 → 高保真 Figma 原型
+- **Phase 3 / 阶段三** — Security review (RLS, input sanitisation), usability testing, LLM evaluation / 安全审查（RLS、输入净化）、可用性测试、LLM 评估
+
+### Why AI? / 为什么加 AI？
+
+Interviewees described spending significant time re-reading assignment PDFs to answer teammates' questions. The AI assistant was designed specifically for this: upload once, ask anything — grounded in your actual assignment content, not generic advice.
+
+访谈中发现用户花费大量时间重读作业 PDF 来回答队友问题。AI 助手正是针对此设计：上传一次，随时提问——基于你的真实作业内容，而非泛泛建议。
