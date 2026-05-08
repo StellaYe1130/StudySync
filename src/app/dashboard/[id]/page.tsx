@@ -131,7 +131,7 @@ export default function ProjectPage() {
       {/* ── Content ── */}
       <main className="flex-1 ml-52 min-h-screen">
         {activeTab === 'dashboard' && <DashboardTab project={project} projectId={id as string} userId={user?.id} userEmail={user?.email} setActiveTab={setActiveTab} />}
-        {activeTab === 'tasks'     && <TasksTab     projectId={id as string} userId={user?.id} />}
+        {activeTab === 'tasks'     && <TasksTab     projectId={id as string} userId={user?.id} userEmail={user?.email} projectName={project?.name} />}
         {activeTab === 'chat'      && <ChatTab      projectId={id as string} userId={user?.id} userEmail={user?.email} />}
         {activeTab === 'calendar'  && <CalendarTab  project={project} />}
         {activeTab === 'stats'     && <StatsTab     projectId={id as string} userId={user?.id} />}
@@ -332,7 +332,7 @@ function StatCard({ label, value, sub, alert, color = 'bg-blue-500' }: { label: 
 
 // ─── Tasks ────────────────────────────────────────────────────────────────────
 
-function TasksTab({ projectId, userId }: { projectId: string; userId: string }) {
+function TasksTab({ projectId, userId, userEmail, projectName }: { projectId: string; userId: string; userEmail?: string; projectName?: string }) {
   const [tasks, setTasks]     = useState<any[]>([])
   const [members, setMembers] = useState<any[]>([])
   const [showForm, setShowForm] = useState(false)
@@ -358,6 +358,13 @@ function TasksTab({ projectId, userId }: { projectId: string; userId: string }) 
     e.preventDefault()
     setSaving(true)
     await supabase.from('tasks').insert({ project_id: projectId, title, status, due_date: dueDate || null, created_by: userId, assignee_id: assigneeId })
+    if (assigneeId && assigneeId !== userId) {
+      fetch('/api/notify-task', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ taskTitle: title, taskStatus: status, taskDueDate: dueDate || null, assigneeId, assignerEmail: userEmail, projectName }),
+      })
+    }
     setTitle(''); setDueDate(''); setStatus('todo'); setAssigneeId(userId); setShowForm(false); setSaving(false)
     loadTasks()
   }
