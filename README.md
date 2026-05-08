@@ -18,8 +18,11 @@
 > Screenshots below — clone and run locally to try the full experience.
 > 下方为截图展示，clone 到本地即可体验完整功能。
 
-<!-- Replace with actual screenshot -->
+![Landing Page](docs/screenshot-landing%20page.png)
+
 ![Dashboard](docs/screenshot-dashboard.png)
+
+![AI Chat](docs/screenshot-ai%20chat.png)
 
 ---
 
