@@ -4,7 +4,11 @@
 
 > 源自真实痛点：通过对大学生的半结构化访谈，识别出透明度不足、协调困难和搭便车问题。
 
-🌐 语言： [English](README.md) · **中文**
+[English](README.md) | [中文](README.zh.md)
+
+在线演示: [https://study-sync-tau-one.vercel.app](https://study-sync-tau-one.vercel.app)
+
+GitHub: [https://github.com/StellaYe1130/StudySync](https://github.com/StellaYe1130/StudySync)
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-99%25-3178C6?style=flat&logo=typescript&logoColor=white)
 ![Next.js](https://img.shields.io/badge/Next.js-16-black?style=flat&logo=next.js)
