@@ -342,6 +342,8 @@ function TasksTab({ projectId, userId, userEmail, projectName }: { projectId: st
   const [status, setStatus]   = useState('todo')
   const [assigneeId, setAssigneeId] = useState(userId)
   const [saving, setSaving]   = useState(false)
+  const [draggingId, setDraggingId] = useState<string | null>(null)
+  const [dragOverCol, setDragOverCol] = useState<string | null>(null)
 
   useEffect(() => { loadTasks(); loadMembers() }, [projectId])
 
@@ -476,17 +478,35 @@ function TasksTab({ projectId, userId, userEmail, projectName }: { projectId: st
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {COLS.map(col => (
-          <div key={col.key}>
+          <div
+            key={col.key}
+            onDragOver={e => { e.preventDefault(); setDragOverCol(col.key) }}
+            onDragLeave={e => { if (!e.currentTarget.contains(e.relatedTarget as Node)) setDragOverCol(null) }}
+            onDrop={e => {
+              e.preventDefault()
+              if (draggingId) updateStatus(draggingId, col.key)
+              setDraggingId(null); setDragOverCol(null)
+            }}
+            className={`rounded-2xl p-2 transition-colors ${dragOverCol === col.key ? 'bg-blue-50 ring-2 ring-blue-200' : 'bg-transparent'}`}
+          >
             <div className={`text-xs font-medium px-3 py-1.5 rounded-lg mb-3 inline-flex items-center gap-1.5 ${col.color}`}>
               {col.label} <span className="opacity-60">{filtered.filter(t => t.status === col.key).length}</span>
             </div>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 min-h-[60px]">
               {filtered.filter(t => t.status === col.key).map(t => {
                 const od = isOverdue(t)
                 return (
-                  <div key={t.id} className={`bg-white border rounded-xl p-3 ${od ? 'border-red-200' : 'border-gray-100'}`}>
+                  <div
+                    key={t.id}
+                    draggable
+                    onDragStart={() => setDraggingId(t.id)}
+                    onDragEnd={() => { setDraggingId(null); setDragOverCol(null) }}
+                    className={`bg-white border rounded-xl p-3 cursor-grab active:cursor-grabbing select-none transition-opacity ${
+                      draggingId === t.id ? 'opacity-40' : 'opacity-100'
+                    } ${od ? 'border-red-200' : 'border-gray-100'}`}
+                  >
                     <p className="text-sm font-medium text-gray-800 mb-2 leading-snug">{t.title}</p>
-                    <div className="flex items-center justify-between mb-2">
+                    <div className="flex items-center justify-between">
                       {t.due_date && (
                         <span className={`text-xs ${od ? 'text-red-500 font-medium' : 'text-gray-400'}`}>
                           {od ? '⚠ ' : ''}{new Date(t.due_date).toLocaleDateString('en-AU', { day: 'numeric', month: 'short' })}
@@ -498,13 +518,6 @@ function TasksTab({ projectId, userId, userEmail, projectName }: { projectId: st
                         </div>
                       )}
                     </div>
-                    <select value={t.status} onChange={e => updateStatus(t.id, e.target.value)}
-                      className="w-full text-xs border border-gray-200 rounded-lg px-2 py-1 focus:outline-none bg-white">
-                      <option value="todo">To do</option>
-                      <option value="in_progress">In progress</option>
-                      <option value="done">Done</option>
-                      <option value="blocked">Blocked</option>
-                    </select>
                   </div>
                 )
               })}
